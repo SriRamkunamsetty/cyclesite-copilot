@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cyclesite-copilot"
+version = "0.1.0"
+description = "Cyclist-first site-selection copilot: Gemini + ADK + BigQuery MCP server"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "google-adk[mcp]>=2.4,<3",
+  "google-cloud-bigquery>=3.25",
+  "google-auth>=2.30",
+  "numpy>=1.26",
+  "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "sqlglot>=25"]
+
+[project.scripts]
+cyclesite = "cyclesite.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cyclesite*", "cycle_agent*"]
+
+[tool.setuptools.package-data]
+cyclesite = ["sql/*.sql", "cities.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::UserWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]

@@ -1,0 +1,40 @@
+# Cities the build pipeline knows how to prepare. Everything here is data, not code: add a city
+# by adding a block. Table and column names are checked against a strict allow-pattern before
+# they are ever placed into SQL text (see cities.py).
+#
+# bikeshare:   observed demand from a public bikeshare trips table (BigQuery public datasets)
+# no bikeshare: demand is MODELLED from nearby places using a model fitted on a bikeshare city,
+#               and the transfer check warns when the city looks unlike the training cities.
+cities:
+  nyc:
+    name: New York City (Citi Bike)
+    bbox: {south: 40.55, west: -74.05, north: 40.90, east: -73.75}
+    grid_spacing_m: 500
+    bikeshare:
+      trips_table: bigquery-public-data.new_york_citibike.citibike_trips
+      time_column: starttime
+      start_id: start_station_id
+      start_lat: start_station_latitude
+      start_lon: start_station_longitude
+      end_id: end_station_id
+      end_lat: end_station_latitude
+      end_lon: end_station_longitude
+
+  sf:
+    name: San Francisco Bay Area (Ford GoBike)
+    bbox: {south: 37.25, west: -122.50, north: 37.90, east: -121.75}
+    grid_spacing_m: 500
+    bikeshare:
+      trips_table: bigquery-public-data.san_francisco_bikeshare.bikeshare_trips
+      time_column: start_date
+      start_id: start_station_id
+      start_lat: start_station_latitude
+      start_lon: start_station_longitude
+      end_id: end_station_id
+      end_lat: end_station_latitude
+      end_lon: end_station_longitude
+
+  pune:
+    name: Pune (no bikeshare data; demand modelled)
+    bbox: {south: 18.43, west: 73.76, north: 18.62, east: 73.95}
+    grid_spacing_m: 500
